@@ -128,7 +128,7 @@ class Cars extends \yii\db\ActiveRecord
             'car_auto_category' => 'Категория',
             'car_brand' => 'Марка',
             'car_big_category' => 'Основна категория/',
-            'car_colour' => 'Car Colour',
+            'car_colour' => 'Цвят',
             'car_comfort' => 'Car Comfort',
             'car_condition' => 'Car Condition',
             'car_exterior' => 'Car Exterior',
