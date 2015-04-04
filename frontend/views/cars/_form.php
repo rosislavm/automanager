@@ -19,12 +19,7 @@ use yii\widgets\ActiveForm;
             ['prompt'=>'Основна категория']
     )  ?>
     
-    <?= $form->field($model, 'car_auto_category')->dropDownList(
-            yii\helpers\ArrayHelper::map(common\models\AvtoCategory::find()->all(),'id', 'avto_category'),
-            ['prompt'=>'Избери категория']
-    )  ?>
-    
-    <?= $form->field($model, 'car_brand')->dropDownList(
+        <?= $form->field($model, 'car_brand')->dropDownList(
             yii\helpers\ArrayHelper::map(common\models\Brand::find()->all(),'id', 'brand_name', 'category_id'),
             ['prompt'=>'Избери марка']
     )  ?>
@@ -32,6 +27,11 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'car_model')->dropDownList(
             yii\helpers\ArrayHelper::map(common\models\Model::find()->all(),'id', 'model_name'),
             ['prompt'=>'Избери марка']
+    )  ?>
+    
+    <?= $form->field($model, 'car_auto_category')->dropDownList(
+            yii\helpers\ArrayHelper::map(common\models\AvtoCategory::find()->all(),'id', 'avto_category'),
+            ['prompt'=>'Избери категория']
     )  ?>
     
     <?= $form->field($model, 'car_img')->fileInput(['maxlength' => true]) ?>
@@ -81,6 +81,11 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'car_engine_type')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'car_colour')->textInput(['maxlength' => true]) ?>
+
+        <?= $form->field($model, 'car_colour')->dropDownList(
+            yii\helpers\ArrayHelper::map(common\models\Colours::find()->all(),'colour_id', 'colour_name'),
+            ['prompt'=>'Избери Цвят']
+    )  ?>
 
     <?= $form->field($model, 'car_comfort')->textInput(['maxlength' => true]) ?>
 
