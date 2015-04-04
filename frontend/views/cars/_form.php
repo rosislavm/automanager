@@ -13,7 +13,27 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'car_year')->textInput(array('rows'=>2,'cols'=>5)) ?>
+    
+        <?= $form->field($model, 'car_big_category')->dropDownList(
+            yii\helpers\ArrayHelper::map(common\models\Category::find()->all(),'id', 'category_name'),
+            ['prompt'=>'Основна категория']
+    )  ?>
+    
+    <?= $form->field($model, 'car_auto_category')->dropDownList(
+            yii\helpers\ArrayHelper::map(common\models\AvtoCategory::find()->all(),'id', 'avto_category'),
+            ['prompt'=>'Избери категория']
+    )  ?>
+    
+    <?= $form->field($model, 'car_brand')->dropDownList(
+            yii\helpers\ArrayHelper::map(common\models\Brand::find()->all(),'id', 'brand_name', 'category_id'),
+            ['prompt'=>'Избери марка']
+    )  ?>
 
+    <?= $form->field($model, 'car_model')->dropDownList(
+            yii\helpers\ArrayHelper::map(common\models\Model::find()->all(),'id', 'model_name'),
+            ['prompt'=>'Избери марка']
+    )  ?>
+    
     <?= $form->field($model, 'car_img')->fileInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'exterior_repair')->textInput(['maxlength' => true]) ?>
@@ -60,21 +80,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'car_engine_type')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'car_big_category')->dropDownList(
-            yii\helpers\ArrayHelper::map(common\models\Category::find()->all(),'id', 'category_name'),
-            ['prompt'=>'Основна категория']
-    )  ?>
-    
-    <?= $form->field($model, 'car_auto_category')->dropDownList(
-            yii\helpers\ArrayHelper::map(common\models\AvtoCategory::find()->all(),'id', 'avto_category'),
-            ['prompt'=>'Избери категория']
-    )  ?>
-    
-    <?= $form->field($model, 'car_brand')->dropDownList(
-            yii\helpers\ArrayHelper::map(common\models\Brand::find()->all(),'id', 'brand_name', 'category_id'),
-            ['prompt'=>'Избери марка']
-    )  ?>
-    
     <?= $form->field($model, 'car_colour')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'car_comfort')->textInput(['maxlength' => true]) ?>
@@ -86,8 +91,6 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'car_interior')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'car_milleage')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'car_model')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'car_other_ex')->textInput(['maxlength' => true]) ?>
 
