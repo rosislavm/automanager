@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'car_model')->dropDownList(
             yii\helpers\ArrayHelper::map(common\models\Model::find()->all(),'id', 'model_name'),
-            ['prompt'=>'Избери марка']
+            ['prompt'=>'Избери Модел']
     )  ?>
     
     <?= $form->field($model, 'car_auto_category')->dropDownList(
