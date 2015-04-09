@@ -40,7 +40,7 @@ class Condition extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'condition_name' => 'Condition Name',
+            'condition_name' => 'Състояние:',
         ];
     }
 

@@ -41,8 +41,8 @@ class Milleage extends \yii\db\ActiveRecord
     {
         return [
             'milleage_id' => 'Milleage ID',
-            'milleage_real' => 'Milleage Real',
-            'milleage_current' => 'Milleage Current',
+            'milleage_real' => 'Реален пробег в км.',
+            'milleage_current' => 'Текущ пробег в км.',
         ];
     }
 

@@ -40,7 +40,7 @@ class Transmission extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'transmission_name' => 'Transmission Name',
+            'transmission_name' => 'Скоростна кутия',
         ];
     }
 

@@ -45,8 +45,8 @@ class Showroom extends \yii\db\ActiveRecord
     {
         return [
             'sh_id' => 'Sh ID',
-            'sh_name' => 'Sh Name',
-            'sh_address' => 'Sh Address',
+            'sh_name' => 'Име на шоурум',
+            'sh_address' => 'Адрес',
             'sh_user_id' => 'Sh User ID',
         ];
     }

@@ -43,7 +43,7 @@ class AvtoCategory extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'avto_category' => 'Avto Category',
+            'avto_category' => 'Основна категория',
             'category_id' => 'Category ID',
         ];
     }

@@ -42,9 +42,9 @@ class Interior extends \yii\db\ActiveRecord
     {
         return [
             'interior_id' => 'Interior ID',
-            'interior_velure' => 'Interior Velure',
-            'interior_right_handdrive' => 'Interior Right Handdrive',
-            'interior_leather' => 'Interior Leather',
+            'interior_velure' => 'Велурен салон',
+            'interior_right_handdrive' => 'Десен волан',
+            'interior_leather' => 'Кожен салон',
         ];
     }
 
