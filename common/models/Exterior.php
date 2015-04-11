@@ -51,18 +51,18 @@ class Exterior extends \yii\db\ActiveRecord
     {
         return [
             'exterior_id' => 'Exterior ID',
-            'exterior_2doors' => 'Exterior 2doors',
-            'exterior_4doors' => 'Exterior 4doors',
-            'exterior_led_lights' => 'Exterior Led Lights',
-            'exterior_xenon' => 'Exterior Xenon',
-            'exterior_al_wheels' => 'Exterior Al Wheels',
-            'exterior_methalic' => 'Exterior Methalic',
-            'exterior_heat_windscr' => 'Exterior Heat Windscr',
-            'exterior_panorama' => 'Exterior Panorama',
-            'exterior_spoilers' => 'Exterior Spoilers',
-            'exterior_toolbar' => 'Exterior Toolbar',
-            'exterior_halogen_lights' => 'Exterior Halogen Lights',
-            'exterior_summer_roof' => 'Exterior Summer Roof',
+            'exterior_2doors' => '2(3) Врати',
+            'exterior_4doors' => '4(5) Врати',
+            'exterior_led_lights' => 'LED фарове',
+            'exterior_xenon' => 'Ксенонови фарове',
+            'exterior_al_wheels' => 'Лети джанти',
+            'exterior_methalic' => 'Металик',
+            'exterior_heat_windscr' => 'Отопляеми чистачки',
+            'exterior_panorama' => 'Панорамен люк',
+            'exterior_spoilers' => 'Спойлери',
+            'exterior_toolbar' => 'Теглич',
+            'exterior_halogen_lights' => 'Халогенни фарове',
+            'exterior_summer_roof' => 'Шибедах',
         ];
     }
 

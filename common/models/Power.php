@@ -40,7 +40,7 @@ class Power extends \yii\db\ActiveRecord
     {
         return [
             'power_id' => 'Power ID',
-            'power_value' => 'Power Value',
+            'power_value' => 'Мощност (к.с.)',
         ];
     }
 

@@ -40,7 +40,7 @@ class Colours extends \yii\db\ActiveRecord
     {
         return [
             'colour_id' => 'Colour ID',
-            'colour_name' => 'Colour Name',
+            'colour_name' => 'Цвят',
         ];
     }
 

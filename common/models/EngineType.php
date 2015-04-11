@@ -40,7 +40,7 @@ class EngineType extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'engine_type' => 'Engine Type',
+            'engine_type' => 'Тип двигател',
         ];
     }
 
