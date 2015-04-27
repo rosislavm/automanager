@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use Yii;
 use common\models\LoginForm;
+use common\models\User;
 use common\models\PasswordResetRequestForm;
 use common\models\ResetPasswordForm;
 use common\models\SignupForm;
@@ -26,7 +27,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'register'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -37,6 +38,14 @@ class SiteController extends Controller
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['register'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->identity->type == User::TYPE_OWNER;
+                        }
                     ],
                 ],
             ],
@@ -120,10 +129,27 @@ class SiteController extends Controller
     {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
+            $model->type = 'owner'; 
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();
                 }
+            }
+        }
+
+        return $this->render('signup', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionRegister()
+    {
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post())) {
+            $model->type = 'user'; 
+            if ($user = $model->signup()) {
+                Yii::$app->getSession()->setFlash('success', 'User: '.$user->username.' has been succesfully created.');
+                return $this->redirect(['register']);
             }
         }
 

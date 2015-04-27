@@ -9,6 +9,7 @@ use yii\widgets\ActiveForm;
 $this->title = 'Signup';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<?= Yii::$app->getSession()->hasFlash('success') ? Yii::$app->getSession()->getFlash('success') : '' ?>
 <div class="site-signup">
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -20,6 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'username') ?>
                 <?= $form->field($model, 'email') ?>
                 <?= $form->field($model, 'password')->passwordInput() ?>
+                <?= $form->field($model, 'password_repeat')->passwordInput() ?>
                 <div class="form-group">
                     <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
                 </div>

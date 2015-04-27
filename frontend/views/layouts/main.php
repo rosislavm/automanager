@@ -5,6 +5,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use frontend\widgets\Alert;
+use common\models\User;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -75,7 +76,14 @@ AppAsset::register($this);
                     'data-method' => 'post'
                 ]
             ];
-          
+            if (Yii::$app->user->identity->type == User::TYPE_OWNER){
+                $menuItems[] = [
+                    'label' => 'Register User',
+                    'url' => [
+                        '/site/register'
+                    ]
+                ];
+            }
         }
                 $menuItems[] = [
                 '<a href="#" class="cart">',
