@@ -42,7 +42,7 @@ class Model extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'model_name' => 'Model Name',
+            'model_name' => 'Модел',
             'brand_id' => 'Brand ID',
         ];
     }

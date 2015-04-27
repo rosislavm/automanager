@@ -42,7 +42,7 @@ class Brand extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'brand_name' => 'Brand Name',
+            'brand_name' => 'Марка',
             'category_id' => 'Category ID',
         ];
     }

@@ -40,7 +40,7 @@ class Town extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'town_name' => 'Town Name',
+            'town_name' => 'Регион',
         ];
     }
 

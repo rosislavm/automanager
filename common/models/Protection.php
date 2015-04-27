@@ -44,11 +44,11 @@ class Protection extends \yii\db\ActiveRecord
     {
         return [
             'protection_id' => 'Protection ID',
-            'protection_alarm' => 'Protection Alarm',
-            'protection_armored' => 'Protection Armored',
-            'protection_imobilizer' => 'Protection Imobilizer',
-            'protection_insured' => 'Protection Insured',
-            'protection_cent_lock' => 'Protection Cent Lock',
+            'protection_alarm' => 'Аларма',
+            'protection_armored' => 'Брониран',
+            'protection_imobilizer' => 'Имобилайзер',
+            'protection_insured' => 'Каско',
+            'protection_cent_lock' => 'Централно заключване',
         ];
     }
 
