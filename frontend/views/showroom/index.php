@@ -25,7 +25,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'sh_id',
             'sh_name',
             'sh_address',
-            'sh_user_id',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
