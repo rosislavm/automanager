@@ -26,7 +26,7 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
         NavBar::begin([
-            'brandLabel' => 'Yiicomm',
+            'brandLabel' => 'Automanager',
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar-inverse navbar-fixed-top'
@@ -34,19 +34,19 @@ AppAsset::register($this);
         ]);
         $menuItems = [
             [
-                'label' => 'Home',
+                'label' => 'Начало',
                 'url' => [
                     '/site/index'
                 ]
             ],
             [
-                'label' => 'About',
+                'label' => 'За нас',
                 'url' => [
                     '/site/about'
                 ]
             ],
             [
-                'label' => 'Contact',
+                'label' => 'Контакти',
                 'url' => [
                     '/site/contact'
                 ]
@@ -54,20 +54,20 @@ AppAsset::register($this);
         ];
         if (Yii::$app->user->isGuest) {
             $menuItems[] = [
-                'label' => 'Signup',
+                'label' => 'Регистрация',
                 'url' => [
                     '/site/signup'
                 ]
             ];
             $menuItems[] = [
-                'label' => 'Login',
+                'label' => 'Вход',
                 'url' => [
                     '/site/login'
                 ]
             ];
         } else {
             $menuItems[] = [
-                'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
+                'label' => 'Отписване (' . Yii::$app->user->identity->username . ')',
                 'url' => [
                     '/site/logout'
                 ],
@@ -82,7 +82,7 @@ AppAsset::register($this);
                 '<span class="quantity">2</span>',
                 '<span class="amount"><i class="fa fa-shopping-cart"></i>$55</span>',
                 '</a>',
-                'label' => 'Cart',
+                'label' => 'Количка',
                 'url' => '#',
                 'items' => [
                 ['label'=>'',

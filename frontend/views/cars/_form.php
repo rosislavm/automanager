@@ -25,7 +25,7 @@ for ($i = date("Y"); $i >= 1980; $i--){
     <div class="option">
     <?= $form->field($model, 'car_big_category')->dropDownList(
             yii\helpers\ArrayHelper::map(common\models\Category::find()->all(),'id', 'category_name'),
-            ['prompt'=>'Основна категория']
+            ['prompt'=>'Избери основна категория']
     )  ?>
     
     <?= $form->field($model, 'car_brand')->dropDownList(
@@ -35,7 +35,7 @@ for ($i = date("Y"); $i >= 1980; $i--){
 
     <?= $form->field($model, 'car_model')->dropDownList(
             yii\helpers\ArrayHelper::map(common\models\Model::find()->all(),'id', 'model_name'),
-            ['prompt'=>'Избери Модел']
+            ['prompt'=>'Избери модел']
     )  ?>
     
     <?= $form->field($model, 'car_auto_category')->dropDownList(
@@ -56,7 +56,7 @@ for ($i = date("Y"); $i >= 1980; $i--){
         
     <?= $form->field($model, 'car_colour')->dropDownList(
             yii\helpers\ArrayHelper::map(common\models\Colours::find()->all(),'colour_id', 'colour_name'),
-            ['prompt'=>'Избери Цвят']
+            ['prompt'=>'Избери цвят']
     )  ?>
     </div>
 

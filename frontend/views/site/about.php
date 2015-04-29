@@ -2,13 +2,13 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-$this->title = 'About';
+$this->title = 'За нас';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-about">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>This is the About page. You may modify the following file to customize its content:</p>
+    <p>Тук трябва да има малко повече информация за нас и нашите оферти</p>
 
     <code><?= __FILE__ ?></code>
 </div>

@@ -10,7 +10,7 @@ use frontend\assets\IndexAsset;
 
 IndexAsset::register($this);
 
-$this->title = 'Contact';
+$this->title = 'Контакти';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -26,28 +26,27 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="row">
                 <div class="col-md-4 col-sm-4">
                     <section><!-- Contacts -->
-                        <h4 class="content-title">Contacts Details</h4>
+                        <h4 class="content-title">Данни за връзка с нас</h4>
                         <ul class="list-unstyled margin-bottom-20">
-                            <li><i class="fa fa-map-marker"></i> 110 Vintage Park Boulevard, Houston, TX 77070</li>
-                            <li><i class="fa fa-envelope"></i> info@example.com</li>
-                            <li><i class="fa fa-phone"></i> 1(281) 3x0 x52x</li>
-                            <li><i class="fa fa-globe"></i> http://www.example.com</li>
+                            <li><i class="fa fa-map-marker"></i> България, София, ул.Проф.Христо Данов 21</li>
+                            <li><i class="fa fa-envelope"></i> automanager@gmail.com</li>
+                            <li><i class="fa fa-phone"></i> (+359)887296171</li>
+                            <li><i class="fa fa-globe"></i> http://www.automanager.info</li>
                         </ul>
                     </section>
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <section><!-- Business Hours -->
-                        <h4 class="content-title">Business Hours</h4>
+                        <h4 class="content-title">Работно време</h4>
                         <ul class="list-unstyled">
-                            <li><strong>Monday-Friday</strong>: 8am to 5pm</li>
-                            <li><strong>Saturday</strong>: Closed</li>
-                            <li><strong>Sunday</strong>: Closed</li>
+                            <li><strong>Понеделник - Петък</strong>: 8:00 - 17:00</li>
+                            <li><strong>Събота и Неделя</strong>: Почивни дни</li>
                         </ul>
                     </section>
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <section><!-- Why we are? -->
-                        <h4 class="content-title">About Us</h4>
+                        <h4 class="content-title">За нас</h4>
                         <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum.</p>
                         <ul>
                             <li class="fa fa-check">Odio dignissimos ducimus</li><br/>
@@ -72,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
                 ]) ?>
                 <div class="form-group">
-                    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                    <?= Html::submitButton('Изпрати', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
         </div>
