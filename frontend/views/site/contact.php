@@ -57,15 +57,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
     <p>
-        If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.
+        Ако имате бизнес запитвания или други въпроси, моля попълнете следната форма за да се свържете с нас! Благодарим Ви!
     </p>
 
     <div class="row">
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
-                <?= $form->field($model, 'name')->textInput()->hint('Please enter your name') ?>
+                <?= $form->field($model, 'name')->textInput()->hint('Моля въведете вашето име') ?>
                 <?= $form->field($model, 'email') ?>
-                <?= $form->field($model, 'subject')->dropDownList(['0' => 'Please Select', '1' => 'General inqury', '2' => 'I need Support']) ?>
+                <?= $form->field($model, 'subject')->dropDownList(['0' => 'Моля изберете', '1' => 'Общо запитване', '2' => 'Трябва ми помощ']) ?>
                 <?= $form->field($model, 'body')->textArea(['rows' => 6]) ?>
                 <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
                     'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',

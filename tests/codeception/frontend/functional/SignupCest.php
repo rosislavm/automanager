@@ -48,16 +48,16 @@ class SignupCest
 
         $signupPage = SignupPage::openBy($I);
         $I->see('Signup', 'h1');
-        $I->see('Please fill out the following fields to signup:');
+        $I->see('Моля попълнете следните полета за да се регистрирате:');
 
         $I->amGoingTo('submit signup form with no data');
 
         $signupPage->submit([]);
 
         $I->expectTo('see validation errors');
-        $I->see('Username cannot be blank.', '.help-block');
-        $I->see('Email cannot be blank.', '.help-block');
-        $I->see('Password cannot be blank.', '.help-block');
+        $I->see('Потребителското име не може да бъде празно.', '.help-block');
+        $I->see('Полето за имейл не може да бъде празно.', '.help-block');
+        $I->see('Полето за парола не може да бъде празно.', '.help-block');
 
         $I->amGoingTo('submit signup form with not correct email');
         $signupPage->submit([
@@ -67,9 +67,9 @@ class SignupCest
         ]);
 
         $I->expectTo('see that email address is wrong');
-        $I->dontSee('Username cannot be blank.', '.help-block');
-        $I->dontSee('Password cannot be blank.', '.help-block');
-        $I->see('Email is not a valid email address.', '.help-block');
+        $I->dontSee('Потребителското име не може да бъде празно.', '.help-block');
+        $I->dontSee('Полето за имейл не може да бъде празно.', '.help-block');
+        $I->see('Имейлът не е валиден.', '.help-block');
 
         $I->amGoingTo('submit signup form with correct email');
         $signupPage->submit([

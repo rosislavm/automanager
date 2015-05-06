@@ -38,6 +38,16 @@ class SignupForm extends Model
             ['password_repeat', 'safe'],
         ];
     }
+    
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Потребителско име',
+            'password' => 'Парола',
+            'email' => 'Email',
+            'password_repeat' => 'Повтори паролата',
+        ];
+    }
 
     /**
      * Signs user up.
@@ -53,7 +63,12 @@ class SignupForm extends Model
             $user->setPassword($this->password);
             $user->generateAuthKey();
             $user->type = $this->type;
-            $user->save();
+            if ($user->save()){
+                $showroom = new Showroom();
+                $showroom->sh_name = 'Моят автосалон';
+                $showroom->sh_address = 'София - този адрес трябва да бъде променен !';
+                $showroom->save();
+            }
             return $user;
         }
 

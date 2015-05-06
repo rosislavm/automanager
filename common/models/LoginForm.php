@@ -43,7 +43,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'Неправилни email или парола.');
             }
         }
     }
@@ -60,6 +60,15 @@ class LoginForm extends Model
         } else {
             return false;
         }
+    }
+    
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Потребителско име',
+            'password' => 'Парола',
+            'rememberMe' => 'Запомни ме',
+        ];
     }
 
     /**

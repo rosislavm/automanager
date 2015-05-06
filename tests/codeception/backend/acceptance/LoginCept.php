@@ -16,8 +16,8 @@ if (method_exists($I, 'wait')) {
     $I->wait(3); // only for selenium
 }
 $I->expectTo('see validations errors');
-$I->see('Username cannot be blank.', '.help-block');
-$I->see('Password cannot be blank.', '.help-block');
+$I->see('Моля въведете потребителско име.', '.help-block');
+$I->see('Моля въведете парола.', '.help-block');
 
 $I->amGoingTo('try to login with wrong credentials');
 $I->expectTo('see validations errors');
@@ -26,7 +26,7 @@ if (method_exists($I, 'wait')) {
     $I->wait(3); // only for selenium
 }
 $I->expectTo('see validations errors');
-$I->see('Incorrect username or password.', '.help-block');
+$I->see('Неправилно потребителско име или парола.', '.help-block');
 
 $I->amGoingTo('try to login with correct credentials');
 $loginPage->login('erau', 'password_0');
