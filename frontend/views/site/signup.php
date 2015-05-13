@@ -1,6 +1,8 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use common\models\User;
 
 /* @var $this yii\web\View */
 /* @var $form yii\widgets\ActiveForm */
@@ -22,6 +24,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'email') ?>
                 <?= $form->field($model, 'password')->passwordInput() ?>
                 <?= $form->field($model, 'password_repeat')->passwordInput() ?>
+                <?php if ($type == User::TYPE_USER): ?>
+                    <?= Html::activeCheckboxList($model, 'showrooms', ArrayHelper::map($showrooms, 'sh_id', 'sh_name')) ?>
+                <?php endif; ?>
                 <div class="form-group">
                     <?= Html::submitButton('Регистрирай ме', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
                 </div>

@@ -32,7 +32,7 @@ class Showroom extends \yii\db\ActiveRecord
     {
         return [
             [['sh_name', 'sh_address'], 'required'],
-            [['sh_name', 'sh_address'], 'string', 'max' => 100]
+            [['sh_name', 'sh_address'], 'string', 'max' => 100],
         ];
     }
 

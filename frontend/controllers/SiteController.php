@@ -8,6 +8,7 @@ use common\models\PasswordResetRequestForm;
 use common\models\ResetPasswordForm;
 use common\models\SignupForm;
 use common\models\ContactForm;
+use common\models\UserShowroom;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -127,9 +128,10 @@ class SiteController extends Controller
 
     public function actionSignup()
     {
+        $type = USER::TYPE_OWNER;
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
-            $model->type = 'owner'; 
+            $model->type = $type; 
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();
@@ -139,22 +141,28 @@ class SiteController extends Controller
 
         return $this->render('signup', [
             'model' => $model,
+            'type' => $type
         ]);
     }
 
     public function actionRegister()
     {
+        $type = USER::TYPE_USER;
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
-            $model->type = 'user'; 
+            $model->type = $type;
             if ($user = $model->signup()) {
                 Yii::$app->getSession()->setFlash('success', 'User: '.$user->username.' has been succesfully created.');
                 return $this->redirect(['register']);
             }
         }
 
+        $showrooms = User::find()->joinWith(['showrooms'])->where(['id_user' => Yii::$app->getUser()->id])->asArray()->One()['showrooms'];
+
         return $this->render('signup', [
             'model' => $model,
+            'showrooms' => $showrooms,
+            'type' => $type
         ]);
     }
 

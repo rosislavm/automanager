@@ -15,6 +15,7 @@ class SignupForm extends Model
     public $password;
     public $password_repeat;
     public $type;
+    public $showrooms;
 
     /**
      * @inheritdoc
@@ -35,7 +36,7 @@ class SignupForm extends Model
             [['password', 'password_repeat'], 'required'],
             [['password', 'password_repeat'], 'string', 'min' => 6],
             ['password_repeat', 'compare', 'compareAttribute' => 'password'],
-            ['password_repeat', 'safe'],
+            [['password_repeat', 'showrooms'], 'safe'],
         ];
     }
     
@@ -63,11 +64,27 @@ class SignupForm extends Model
             $user->setPassword($this->password);
             $user->generateAuthKey();
             $user->type = $this->type;
+            
             if ($user->save()){
-                $showroom = new Showroom();
-                $showroom->sh_name = 'Моят автосалон';
-                $showroom->sh_address = 'София - този адрес трябва да бъде променен !';
-                $showroom->save();
+                if ($this->type == USER::TYPE_OWNER) {
+                    $showroom = new Showroom();
+                    $showroom->sh_name = 'Моят автосалон';
+                    $showroom->sh_address = 'София - този адрес трябва да бъде променен !';
+                    if($showroom->save()){
+                        $user_showroom = new UserShowroom;
+                        $user_showroom->id_user = $user->id;
+                        $user_showroom->id_showroom = $showroom->id;
+                        $user_showroom->save();
+                    }
+                }elseif($this->type == USER::TYPE_USER && !empty($this->showrooms)){
+                    foreach ($this->showrooms as $sh_id) {
+                        $user_showroom = new UserShowroom;
+                        $user_showroom->id_user = $user->id;
+                        $user_showroom->id_showroom = $sh_id;
+                        $user_showroom->save();
+                    }
+                    
+                }
             }
             return $user;
         }

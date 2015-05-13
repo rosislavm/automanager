@@ -4,10 +4,13 @@ namespace frontend\controllers;
 
 use Yii;
 use common\models\Showroom;
+use common\models\UserShowroom;
+use common\models\User;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * ShowroomController implements the CRUD actions for Showroom model.
@@ -17,6 +20,25 @@ class ShowroomController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index', 'delete', 'update', 'view', 'create'],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['delete', 'update', 'create'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->identity->type == User::TYPE_OWNER;
+                        }
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -33,7 +55,7 @@ class ShowroomController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Showroom::find(),
+            'query' => Showroom::find()->joinWith(['userShowrooms'])->where(['id_user' => Yii::$app->getUser()->id]),
         ]);
 
         return $this->render('index', [
@@ -48,9 +70,13 @@ class ShowroomController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if (UserShowroom::find()->where(['id_user' => Yii::$app->getUser()->id, 'id_showroom' => $id])->one()) {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }else{
+            return $this->redirect(['index']);
+        }
     }
 
     /**
@@ -63,6 +89,11 @@ class ShowroomController extends Controller
         $model = new Showroom();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $user_showroom = new UserShowroom;
+            $user_showroom->id_user = Yii::$app->getUser()->id;
+            $user_showroom->id_showroom = $model->sh_id;
+            $user_showroom->save();
+
             return $this->redirect(['view', 'id' => $model->sh_id]);
         } else {
             return $this->render('create', [
@@ -79,14 +110,18 @@ class ShowroomController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (UserShowroom::find()->where(['id_user' => Yii::$app->getUser()->id, 'id_showroom' => $id])->one()) {
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->sh_id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->sh_id]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+        }else{
+            return $this->redirect(['index']);
         }
     }
 
@@ -98,7 +133,10 @@ class ShowroomController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(UserShowroom::find()->where(['id_user' => Yii::$app->getUser()->id, 'id_showroom' => $id])->one()){
+            UserShowroom::deleteAll('id_showroom=:id_showroom', [':id_showroom' => $id]);
+            $this->findModel($id)->delete();
+        }
 
         return $this->redirect(['index']);
     }
