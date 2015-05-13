@@ -2,11 +2,13 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use common\models\User;
+use yii\grid\CButtonColumn;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Шоуруми';
+$this->title = 'Автосалони';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="showroom-index">
@@ -14,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Showroom', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Създай Автосалон', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -22,12 +24,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'sh_id',
+            //'sh_id',
             'sh_name',
             'sh_address',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn','template' => (Yii::$app->user->identity->type == User::TYPE_OWNER ? '{view} {update} {delete}' : '{view}')],
+
         ],
+
+        
     ]); ?>
 
 </div>

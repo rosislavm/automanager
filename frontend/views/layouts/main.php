@@ -11,6 +11,7 @@ use common\models\User;
 /* @var $content string */
 
 AppAsset::register($this);
+
 ?>
 <?php $this->beginPage()?>
 <!DOCTYPE html>
@@ -78,7 +79,7 @@ AppAsset::register($this);
             ];
             if (Yii::$app->user->identity->type == User::TYPE_OWNER){
                 $menuItems[] = [
-                    'label' => 'Register User',
+                    'label' => 'Добави Потребител',
                     'url' => [
                         '/site/register'
                     ]
@@ -87,7 +88,7 @@ AppAsset::register($this);
 
             }
              $menuItems[] = [
-                'label' => 'My Showrooms',
+                'label' => 'Моите Автосалони',
                 'url' => [
                     '/showroom/'
                 ]
@@ -140,7 +141,11 @@ AppAsset::register($this);
         ?>
 
         <div class="container">
-        <?=Breadcrumbs::widget(['links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : []])?>
+        <?=Breadcrumbs::widget(['homeLink' => [ 
+                      'label' => Yii::t('yii', 'Начало'),
+                      'url' => Yii::$app->homeUrl,
+                 ],
+                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : []])?>
         <?= Alert::widget()?>
         <?= $content?>
         </div>

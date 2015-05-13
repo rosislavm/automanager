@@ -73,7 +73,7 @@ class SignupForm extends Model
                     if($showroom->save()){
                         $user_showroom = new UserShowroom;
                         $user_showroom->id_user = $user->id;
-                        $user_showroom->id_showroom = $showroom->id;
+                        $user_showroom->id_showroom = $showroom->sh_id;
                         $user_showroom->save();
                     }
                 }elseif($this->type == USER::TYPE_USER && !empty($this->showrooms)){
