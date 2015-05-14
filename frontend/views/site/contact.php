@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-contact">
     <h1><?= Html::encode($this->title) ?></h1>
     <!-- Google Map -->
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3455.454059156738!2d-95.57263599999999!3d29.995115999999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640d2629077027b%3A0x16725099b7fa483d!2sVintage+Park+Leasing+%26+Management!5e0!3m2!1sen!2sus!4v1403725703074" width="100%" height="300" frameborder="0" style="border:0"></iframe>
+   <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1467.115634934528!2d23.34422271705151!3d42.656454285297684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sbg!4v1431635222697" width="100%" height="300" frameborder="0" style="border:0"></iframe>
     <!---/map-->
     <!-- End Google Map -->
     <div class="container">		
