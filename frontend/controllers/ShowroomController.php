@@ -89,17 +89,31 @@ class ShowroomController extends Controller
         $model = new Showroom();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $user_showroom = new UserShowroom;
-            $user_showroom->id_user = Yii::$app->getUser()->id;
-            $user_showroom->id_showroom = $model->sh_id;
-            $user_showroom->save();
+            foreach ($model->users as $key => $value) {
+             //Rosko       
+                $user_showroom = new UserShowroom;
+                $user_showroom->id_user = $value;
+                $user_showroom->id_showroom = $model->sh_id;
+                $user_showroom->save();
+            }
 
             return $this->redirect(['view', 'id' => $model->sh_id]);
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+           // return $this->render('create', [
+           //     'model' => $model,
+           // ]);
+       // }
+
+        //Rosko
+         $users = User::find()->where(['parent' => Yii::$app->getUser()->id])->asArray()->all();
+
+        return $this->render('create', [
+            'model' => $model,
+            'users' => $users,
+            // 'type' => $type
+        ]);
+
+        }//Rosko
     }
 
     /**
@@ -123,6 +137,15 @@ class ShowroomController extends Controller
         }else{
             return $this->redirect(['index']);
         }
+
+        //Rosko
+        $users = User::find()->joinWith(['showrooms'])->where(['id_user' => Yii::$app->getUser()->id])->asArray()->One()['showrooms'];
+
+        return $this->render('create', [
+            'model' => $model,
+            'showrooms' => $showrooms,
+            'type' => $type
+        ]);
     }
 
     /**

@@ -17,6 +17,7 @@ use Yii;
  */
 class Showroom extends \yii\db\ActiveRecord
 {
+    public $users;
     /**
      * @inheritdoc
      */
@@ -64,4 +65,5 @@ class Showroom extends \yii\db\ActiveRecord
     {
         return $this->hasMany(UserShowroom::className(), ['id_showroom' => 'sh_id']);
     }
+
 }
