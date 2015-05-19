@@ -4,11 +4,14 @@ namespace frontend\controllers;
 
 use Yii;
 use common\models\Cars;
+use common\models\User;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 use yii\filters\VerbFilter;
-
+use yii\filters\AccessControl;
+use yii\helpers\BaseFileHelper;
 /**
  * CarsController implements the CRUD actions for Cars model.
  */
@@ -17,6 +20,25 @@ class CarsController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index', 'view', 'create', 'update', 'delete'],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->identity->type == User::TYPE_OWNER;
+                        }
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -26,6 +48,7 @@ class CarsController extends Controller
         ];
     }
 
+
     /**
      * Lists all Cars models.
      * @return mixed
@@ -33,7 +56,7 @@ class CarsController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Cars::find(),
+            'query' => Cars::find()->joinWith(['userShowrooms'])->where(['id_user' => Yii::$app->getUser()->id]),
         ]);
 
         return $this->render('index', [
@@ -62,7 +85,20 @@ class CarsController extends Controller
     {
         $model = new Cars();
 
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+        
+            $model->image = UploadedFile::getInstance($model, 'car_img');
+
+            // if ($model->validate()) {                
+                BaseFileHelper::createDirectory('uploads/cars/'.$model->car_id.'/', 777);
+                $image_path = 'uploads/cars/'.$model->car_id.'/'. $model->image->baseName . '.' . $model->image->extension;
+                $model->image->saveAs($image_path);
+            // }
+            $model->car_img = $image_path;
+            $model->save();
+
             return $this->redirect(['view', 'id' => $model->car_id]);
         } else {
             return $this->render('create', [
@@ -80,8 +116,22 @@ class CarsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $old_image = $model->car_img;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            $model->image = UploadedFile::getInstance($model, 'car_img');
+
+            BaseFileHelper::createDirectory('uploads/cars/'.$model->car_id.'/', 777);
+            $image_path = 'uploads/cars/'.$model->car_id.'/'. $model->image->baseName . '.' . $model->image->extension;
+            
+            if($model->image->saveAs($image_path)){
+                $model->car_img = $image_path;
+                if ($model->save() && $old_image){
+                    @unlink($old_image);
+                }
+            }
+
             return $this->redirect(['view', 'id' => $model->car_id]);
         } else {
             return $this->render('update', [
@@ -112,7 +162,7 @@ class CarsController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Cars::findOne($id)) !== null) {
+        if (($model = Cars::find()->joinWith(['userShowrooms'])->where(['id_user' => Yii::$app->getUser()->id, 'car_id' => $id])->one()) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
