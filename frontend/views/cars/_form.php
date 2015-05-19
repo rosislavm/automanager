@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 ?>
 
 <?php
-for ($i = date("Y"); $i >= 1980; $i--){
+for ($i = date("Y"); $i >= 1970; $i--){
     $year[$i]  = $i;
 }
 ?>

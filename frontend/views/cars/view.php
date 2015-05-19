@@ -29,7 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'car_id',
+            //'car_id',
+            'car_sh_id',
+            'car_big_category',
             'car_year',
             'car_img:image',
             'exterior_repair',
@@ -52,8 +54,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'import_country',
             'has_crashed',
             'other_info',
-            'car_sh_id',
-            'car_engine_type',
+           // 'car_engine_type',
+            [
+                // 'label' => 'Марка:',
+                'attribute' => 'car_engine_type',
+                'value' => $model->CarEngineType->engine_type,
+            ],
             'car_auto_category',
             [
                 // 'label' => 'Марка:',
@@ -61,14 +67,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => $model->carBrand->brand_name,
             ],
             'car_brand',
-            'car_model',
-            'car_big_category',
-            'car_colour',
+           // 'car_model',
+            [
+                // 'label' => 'Марка:',
+                'attribute' => 'car_model',
+                'value' => $model->carModel->model_name,
+            ],
+            //'car_colour',
+            [
+                // 'label' => 'Марка:',
+                'attribute' => 'car_colour',
+                'value' => $model->carColour->colour_name,
+            ],
             'car_comfort',
             [
                 'label' => 'Bluetooth',
-                'value' => $model->carComfort->comfort_bluetooth ? 'Yes' : 'No',
+                'value' => $model->carComfort->comfort_bluetooth ? 'Има' : 'Няма',
             ],
+            /// i drugite
             'car_condition',
             'car_exterior',
             'car_interior',
