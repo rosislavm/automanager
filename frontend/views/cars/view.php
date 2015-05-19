@@ -10,6 +10,7 @@ $this->title = $model->car_id;
 $this->params['breadcrumbs'][] = ['label' => 'Cars', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="cars-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -30,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'car_id',
             'car_year',
-            'car_img:ntext',
+            'car_img:image',
             'exterior_repair',
             'interior_repair',
             'chassis_repair',
@@ -54,15 +55,24 @@ $this->params['breadcrumbs'][] = $this->title;
             'car_sh_id',
             'car_engine_type',
             'car_auto_category',
+            [
+                // 'label' => 'Марка:',
+                'attribute' => 'car_brand',
+                'value' => $model->carBrand->brand_name,
+            ],
             'car_brand',
+            'car_model',
             'car_big_category',
             'car_colour',
             'car_comfort',
+            [
+                'label' => 'Bluetooth',
+                'value' => $model->carComfort->comfort_bluetooth ? 'Yes' : 'No',
+            ],
             'car_condition',
             'car_exterior',
             'car_interior',
             'car_milleage',
-            'car_model',
             'car_other_ex',
             'car_power',
             'car_protection',

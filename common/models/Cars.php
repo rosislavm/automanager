@@ -70,6 +70,7 @@ use Yii;
  */
 class Cars extends \yii\db\ActiveRecord
 {
+    public $image;
     /**
      * @inheritdoc
      */
@@ -84,8 +85,9 @@ class Cars extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['car_year', 'car_img', 'exterior_repair', 'interior_repair', 'chassis_repair', 'engine_repair', 'other_repairs', 'total_spent', 'bought_for', 'price_for_sale', 'max_discount', 'docs_available', 'paid_duty', 'paid_ecotax', 'transit_numberplate', 'fuel_paid', 'car_wash', 'hour_book', 'disadvantages', 'import_country', 'has_crashed', 'other_info', 'car_sh_id', 'car_engine_type', 'car_auto_category', 'car_brand', 'car_big_category', 'car_colour', 'car_comfort', 'car_condition', 'car_exterior', 'car_interior', 'car_milleage', 'car_model', 'car_other_ex', 'car_power', 'car_protection', 'car_safety', 'car_town', 'car_transmission'], 'required'],
+            [['car_year', 'exterior_repair', 'interior_repair', 'chassis_repair', 'engine_repair', 'other_repairs', 'total_spent', 'bought_for', 'price_for_sale', 'max_discount', 'docs_available', 'paid_duty', 'paid_ecotax', 'transit_numberplate', 'fuel_paid', 'car_wash', 'hour_book', 'disadvantages', 'import_country', 'has_crashed', 'other_info', 'car_sh_id', 'car_engine_type', 'car_auto_category', 'car_brand', 'car_big_category', 'car_colour', 'car_comfort', 'car_condition', 'car_exterior', 'car_interior', 'car_milleage', 'car_model', 'car_other_ex', 'car_power', 'car_protection', 'car_safety', 'car_town', 'car_transmission'], 'required'],
             [['car_img'], 'string'],
+            [['image'], 'file'/*,'extensions' => 'gif, jpg, png, jpeg'*/],
             [['total_spent', 'bought_for', 'price_for_sale', 'max_discount', 'paid_duty', 'paid_ecotax', 'transit_numberplate', 'fuel_paid', 'car_wash'], 'number'],
             [['car_sh_id', 'car_engine_type', 'car_auto_category', 'car_brand', 'car_big_category', 'car_colour', 'car_comfort', 'car_condition', 'car_exterior', 'car_interior', 'car_milleage', 'car_model', 'car_other_ex', 'car_power', 'car_protection', 'car_safety', 'car_town', 'car_transmission'], 'integer'],
             [['car_year'], 'string', 'max' => 10],
@@ -275,6 +277,14 @@ class Cars extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getUserShowrooms()
+    {
+        return $this->hasOne(UserShowroom::className(), ['id_showroom' => 'car_sh_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getCarTown()
     {
         return $this->hasOne(Town::className(), ['id' => 'car_town']);
@@ -287,4 +297,6 @@ class Cars extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Transmission::className(), ['id' => 'car_transmission']);
     }
+
+    
 }

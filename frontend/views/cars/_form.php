@@ -16,9 +16,9 @@ for ($i = date("Y"); $i >= 1980; $i--){
 
 <div class="cars-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 <div class="option">
-    <?= $form->field($model, 'car_year')->dropDownList(array($year)) ?>
+    <?= $form->field($model, 'car_year')->dropDownList($year) ?>
 </div>
     <?= $form->field($model, 'car_img')->fileInput(['maxlength' => true]) ?>
     
