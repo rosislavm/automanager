@@ -87,30 +87,32 @@ class ShowroomController extends Controller
     public function actionCreate()
     {
         $model = new Showroom();
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            foreach ($model->users as $key => $value) {
-             //Rosko       
-                $user_showroom = new UserShowroom;
-                $user_showroom->id_user = $value;
-                $user_showroom->id_showroom = $model->sh_id;
-                $user_showroom->save();
+            
+            $user_showroom = new UserShowroom;
+            $user_showroom->id_user = Yii::$app->getUser()->id;
+            $user_showroom->id_showroom = $model->sh_id;
+            $user_showroom->save();
+
+            if (!empty($model->users)){
+                foreach ($model->users as $key => $value) {
+                    $user_showroom = new UserShowroom;
+                    $user_showroom->id_user = $value;
+                    $user_showroom->id_showroom = $model->sh_id;
+                    $user_showroom->save();
+                }
             }
+
 
             return $this->redirect(['view', 'id' => $model->sh_id]);
         } else {
-           // return $this->render('create', [
-           //     'model' => $model,
-           // ]);
-       // }
 
         //Rosko
-         $users = User::find()->where(['parent' => Yii::$app->getUser()->id])->asArray()->all();
+        $users = User::find()->where(['parent' => Yii::$app->getUser()->id])->asArray()->all();
 
         return $this->render('create', [
             'model' => $model,
             'users' => $users,
-            // 'type' => $type
         ]);
 
         }//Rosko
@@ -125,26 +127,51 @@ class ShowroomController extends Controller
     public function actionUpdate($id)
     {
         if (UserShowroom::find()->where(['id_user' => Yii::$app->getUser()->id, 'id_showroom' => $id])->one()) {
+            //Rosko
+            $users = User::find()->where(['parent' => Yii::$app->getUser()->id])->asArray()->all();
             $model = $this->findModel($id);
 
+            $selected_users = UserShowroom::find('id_user')->where(['id_showroom' => $id])->asArray()->All();
+            if (!empty($selected_users)) {
+                foreach ($selected_users as $user) {
+                    $model->users[] = $user['id_user'];
+                }
+            }
+
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+                // UserShowroom::delete()->where(['id_showroom' => $id]);
+                UserShowroom::deleteAll('id_showroom = :id_showroom', [':id_showroom' => $id]);
+                $user_showroom = new UserShowroom;
+                $user_showroom->id_user = Yii::$app->getUser()->id;
+                $user_showroom->id_showroom = $model->sh_id;
+                $user_showroom->save();
+
+                if (!empty($model->users)){
+                    foreach ($model->users as $key => $value) {
+                        $user_showroom = new UserShowroom;
+                        $user_showroom->id_user = $value;
+                        $user_showroom->id_showroom = $model->sh_id;
+                        $user_showroom->save();
+                    }
+                }
+
                 return $this->redirect(['view', 'id' => $model->sh_id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
+                    'users' => $users,
                 ]);
             }
         }else{
             return $this->redirect(['index']);
         }
 
-        //Rosko
-        $users = User::find()->joinWith(['showrooms'])->where(['id_user' => Yii::$app->getUser()->id])->asArray()->One()['showrooms'];
 
         return $this->render('create', [
             'model' => $model,
-            'showrooms' => $showrooms,
-            'type' => $type
+            'users' => $users,
+            // 'type' => $type
         ]);
     }
 

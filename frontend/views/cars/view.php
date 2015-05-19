@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 // 'label' => 'Марка:',
                 'attribute' => 'car_engine_type',
-                'value' => $model->CarEngineType->engine_type,
+                'value' => $model->carEngineType->engine_type,
             ],
             'car_auto_category',
             [
