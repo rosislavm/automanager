@@ -8,7 +8,7 @@ use common\models\User;
 /* @var $model common\models\Showroom */
 
 $this->title = $model->sh_name;
-$this->params['breadcrumbs'][] = ['label' => 'Showrooms', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Моите Автосалони', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="showroom-view">
@@ -17,12 +17,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?php if(Yii::$app->user->identity->type == User::TYPE_OWNER){
-            echo Html::a('Update', ['update', 'id' => $model->sh_id], ['class' => 'btn btn-primary']);
+            echo Html::a('Обнови', ['update', 'id' => $model->sh_id], ['class' => 'btn btn-primary']);
             }
         ?>
 
         <?php if(Yii::$app->user->identity->type == User::TYPE_OWNER){
-                echo Html::a('Delete', ['delete', 'id' => $model->sh_id], [
+                echo Html::a('Изтрий', ['delete', 'id' => $model->sh_id], [
                     'class' => 'btn btn-danger',
                     'data' => [
                         'confirm' => 'Are you sure you want to delete this item?',

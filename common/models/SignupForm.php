@@ -16,6 +16,7 @@ class SignupForm extends Model
     public $password_repeat;
     public $type;
     public $showrooms;
+    public $parent;
 
     /**
      * @inheritdoc
@@ -64,6 +65,7 @@ class SignupForm extends Model
             $user->setPassword($this->password);
             $user->generateAuthKey();
             $user->type = $this->type;
+            $user->parent = @$this->parent;
             
             if ($user->save()){
                 if ($this->type == USER::TYPE_OWNER) {

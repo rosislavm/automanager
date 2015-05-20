@@ -93,6 +93,13 @@ AppAsset::register($this);
                     '/showroom/'
                 ]
             ];
+
+            $menuItems[] = [
+                'label' => 'Моите Автомобили',
+                'url' => [
+                    '/cars/'
+                ]
+            ];
         }
             //     $menuItems[] = [
             //     '<a href="#" class="cart">',

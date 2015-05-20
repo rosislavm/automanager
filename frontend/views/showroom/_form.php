@@ -18,7 +18,7 @@ use yii\helpers\ArrayHelper;
     <?= $form->field($model, 'sh_address')->textInput(['maxlength' => true]) ?>
     <?= Html::activeCheckboxList($model, 'users', ArrayHelper::map($users, 'id', 'username')) ?>
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Създай' : 'Обнови', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

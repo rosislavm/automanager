@@ -2,11 +2,13 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use common\models\User;
+use yii\grid\CButtonColumn;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Cars';
+$this->title = 'Моите Автомобили';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cars-index">
@@ -14,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Cars', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Въведи Автомобил', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -22,11 +24,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'car_id',
+           // 'car_id',
+            'car_brand',
+            'car_model',
+            'car_engine_type',
+            'car_power',
             'car_year',
-            'car_img:ntext',
-            'exterior_repair',
-            'interior_repair',
+          //  'car_img:ntext',
+          //  'exterior_repair',
+          //  'interior_repair',
             // 'chassis_repair',
             // 'engine_repair',
             // 'other_repairs',
@@ -46,9 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'has_crashed',
             // 'other_info',
             // 'car_sh_id',
-            // 'car_engine_type',
             // 'car_auto_category',
-            // 'car_brand',
             // 'car_big_category',
             // 'car_colour',
             // 'car_comfort',
@@ -56,15 +60,13 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'car_exterior',
             // 'car_interior',
             // 'car_milleage',
-            // 'car_model',
             // 'car_other_ex',
-            // 'car_power',
             // 'car_protection',
             // 'car_safety',
             // 'car_town',
             // 'car_transmission',
 
-            ['class' => 'yii\grid\ActionColumn'],
+             ['class' => 'yii\grid\ActionColumn','template' => (Yii::$app->user->identity->type == User::TYPE_OWNER ? '{view} {update} {delete}' : '{view}')],
         ],
     ]); ?>
 

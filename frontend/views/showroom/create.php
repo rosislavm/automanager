@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Showroom */
 
-$this->title = 'Create Showroom';
-$this->params['breadcrumbs'][] = ['label' => 'Showrooms', 'url' => ['index']];
+$this->title = 'Създай Автосалон';
+$this->params['breadcrumbs'][] = ['label' => 'Моите Автосалони', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="showroom-create">

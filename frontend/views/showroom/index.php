@@ -8,7 +8,7 @@ use yii\grid\CButtonColumn;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Автосалони';
+$this->title = 'Моите Автосалони';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="showroom-index">

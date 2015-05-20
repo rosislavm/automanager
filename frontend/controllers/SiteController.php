@@ -151,13 +151,18 @@ class SiteController extends Controller
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             $model->type = $type;
+            $model->parent =Yii::$app->getUser()->id;
             if ($user = $model->signup()) {
                 Yii::$app->getSession()->setFlash('success', 'User: '.$user->username.' беше успешно регистриран.');
                 return $this->redirect(['register']);
             }
         }
 
-        $showrooms = User::find()->joinWith(['showrooms'])->where(['id_user' => Yii::$app->getUser()->id])->asArray()->One()['showrooms'];
+        //$showrooms = User::find()->with('showrooms')->joinWith(['showrooms'])->where(['id_user' => Yii::$app->getUser()->id])->asArray()->One()['showrooms'];
+        $user = User::find()->joinWith(['showrooms'])->where(['id_user' => Yii::$app->getUser()->id])->One();
+        print_r($user->showrooms);
+//        print_r($showrooms);
+        exit;
 
         return $this->render('signup', [
             'model' => $model,
