@@ -65,7 +65,10 @@ class SignupForm extends Model
             $user->setPassword($this->password);
             $user->generateAuthKey();
             $user->type = $this->type;
-            $user->parent = @$this->parent;
+            //Rosko
+             if ($this->type == USER::TYPE_USER) {
+                 $user->parent = @$this->parent;
+             }
             
             if ($user->save()){
                 if ($this->type == USER::TYPE_OWNER) {

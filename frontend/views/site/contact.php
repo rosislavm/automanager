@@ -46,13 +46,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <section><!-- Why we are? -->
-                        <h4 class="content-title">За нас</h4>
-                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum.</p>
-                        <ul>
-                            <li class="fa fa-check">Odio dignissimos ducimus</li><br/>
-                            <li class="fa fa-check">Blanditiis praesentium volup</li><br/>
-                            <li class="fa fa-check">Eos et accusamus</li>
-                        </ul>
+                        <h4 class="content-title">Ние сме</h4>
+                        <p>Малка компания, която тепърва разкрива своя потенциал и разширява бизнес кръга от партньори и клиенти. Отворени сме към иновации и винаги готови да се отзовем при нужда от нашата професионална помощ.</p>
                     </section>
                 </div>
             </div>

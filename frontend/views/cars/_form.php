@@ -104,7 +104,12 @@ for ($i = date("Y"); $i >= 1970; $i--){
 
     <?= $form->field($model, 'car_engine_type')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'car_comfort')->textInput(['maxlength' => true]) ?>
+    <?php //= $form->field($model, 'car_comfort')->textInput(['maxlength' => true]) ?>
+
+    <?= $this->render('_form_comfort', [
+        'model' => $comfort_model,
+        'form' => $form,
+    ]) ?>
 
     <?= $form->field($model, 'car_condition')->textInput() ?>
 

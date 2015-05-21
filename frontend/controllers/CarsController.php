@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use common\models\Cars;
 use common\models\User;
+use common\models\Comfort;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -84,6 +85,7 @@ class CarsController extends Controller
     public function actionCreate()
     {
         $model = new Cars();
+        $comfort_model = new Comfort();
 
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -96,13 +98,20 @@ class CarsController extends Controller
                 $image_path = 'uploads/cars/'.$model->car_id.'/'. $model->image->baseName . '.' . $model->image->extension;
                 $model->image->saveAs($image_path);
             // }
+            $comfort_model->load(Yii::$app->request->post());
+            $comfort_model->save();
+            
+            $model->car_comfort = $comfort_model->comfort_id;
+
             $model->car_img = $image_path;
             $model->save();
+
 
             return $this->redirect(['view', 'id' => $model->car_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'comfort_model' => $comfort_model,
             ]);
         }
     }
@@ -116,6 +125,7 @@ class CarsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $comfort_model = $model->carComfort;
         $old_image = $model->car_img;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -125,17 +135,23 @@ class CarsController extends Controller
             BaseFileHelper::createDirectory('uploads/cars/'.$model->car_id.'/', 777);
             $image_path = 'uploads/cars/'.$model->car_id.'/'. $model->image->baseName . '.' . $model->image->extension;
             
+            $comfort_model->load(Yii::$app->request->post());
+            $comfort_model->save();
+            $model->car_comfort = $comfort_model->comfort_id;
+
             if($model->image->saveAs($image_path)){
                 $model->car_img = $image_path;
-                if ($model->save() && $old_image){
-                    @unlink($old_image);
-                }
+            }
+
+            if ($model->save() && $old_image){
+                @unlink($old_image);
             }
 
             return $this->redirect(['view', 'id' => $model->car_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'comfort_model' => $comfort_model,
             ]);
         }
     }

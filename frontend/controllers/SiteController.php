@@ -158,11 +158,11 @@ class SiteController extends Controller
             }
         }
 
-        //$showrooms = User::find()->with('showrooms')->joinWith(['showrooms'])->where(['id_user' => Yii::$app->getUser()->id])->asArray()->One()['showrooms'];
-        $user = User::find()->joinWith(['showrooms'])->where(['id_user' => Yii::$app->getUser()->id])->One();
-        print_r($user->showrooms);
+        $showrooms = User::find()->with('showrooms')->joinWith(['showrooms'])->where(['id_user' => Yii::$app->getUser()->id])->asArray()->One()['showrooms'];
+        //$user = User::find()->joinWith(['showrooms'])->where(['id_user' => Yii::$app->getUser()->id])->One();
+        //print_r($user->showrooms);
 //        print_r($showrooms);
-        exit;
+    //    exit;
 
         return $this->render('signup', [
             'model' => $model,
