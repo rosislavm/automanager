@@ -6,6 +6,11 @@ use Yii;
 use common\models\Cars;
 use common\models\User;
 use common\models\Comfort;
+use common\models\Interior;
+use common\models\Exterior;
+use common\models\OtherEx;
+use common\models\Protection;
+use common\models\Safety;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -86,6 +91,11 @@ class CarsController extends Controller
     {
         $model = new Cars();
         $comfort_model = new Comfort();
+        $interior_model = new Interior();
+        $exterior_model = new Exterior();
+        $other_ex_model = new OtherEx();
+        $protection_model = new Protection();
+        $safety_model = new Safety();
 
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -98,10 +108,35 @@ class CarsController extends Controller
                 $image_path = 'uploads/cars/'.$model->car_id.'/'. $model->image->baseName . '.' . $model->image->extension;
                 $model->image->saveAs($image_path);
             // }
+            //COMFORT MODEL
             $comfort_model->load(Yii::$app->request->post());
             $comfort_model->save();
-            
             $model->car_comfort = $comfort_model->comfort_id;
+
+            //INTERIOR MODEL
+            $interior_model->load(Yii::$app->request->post());
+            $interior_model->save();
+            $model->car_interior = $interior_model->interior_id;
+
+            //EXTERIOR MODEL
+            $exterior_model->load(Yii::$app->request->post());
+            $exterior_model->save();
+            $model->car_exterior = $exterior_model->exterior_id;
+
+            //OTHER EXTRA MODEL
+            $other_ex_model->load(Yii::$app->request->post());
+            $other_ex_model->save();
+            $model->car_other_ex = $other_ex_model->other_ex_id;
+
+            //PROTECTION MODEL
+            $protection_model->load(Yii::$app->request->post());
+            $protection_model->save();
+            $model->car_protection = $protection_model->protection_id;
+
+            //SAFETY MODEL
+            $safety_model->load(Yii::$app->request->post());
+            $safety_model->save();
+            $model->car_safety = $safety_model->safety_id;
 
             $model->car_img = $image_path;
             $model->save();
@@ -112,6 +147,11 @@ class CarsController extends Controller
             return $this->render('create', [
                 'model' => $model,
                 'comfort_model' => $comfort_model,
+                'interior_model' => $interior_model,
+                'exterior_model' => $exterior_model,
+                'other_ex_model' => $other_ex_model,
+                'protection_model' => $protection_model,
+                'safety_model' => $safety_model,
             ]);
         }
     }
@@ -126,6 +166,12 @@ class CarsController extends Controller
     {
         $model = $this->findModel($id);
         $comfort_model = $model->carComfort;
+        $interior_model = $model->carInterior;
+        $exterior_model = $model->carExterior;
+        $other_ex_model = $model->carOtherEx;
+        $protection_model = $model->carProtection;
+        $safety_model = $model->carSafety;
+
         $old_image = $model->car_img;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -138,6 +184,27 @@ class CarsController extends Controller
             $comfort_model->load(Yii::$app->request->post());
             $comfort_model->save();
             $model->car_comfort = $comfort_model->comfort_id;
+
+
+            $interior_model->load(Yii::$app->request->post());
+            $interior_model->save();
+            $model->car_interior = $interior_model->interior_id;
+
+            $exterior_model->load(Yii::$app->request->post());
+            $exterior_model->save();
+            $model->car_exterior = $exterior_model->exterior_id;
+
+            $other_ex_model->load(Yii::$app->request->post());
+            $other_ex_model->save();
+            $model->car_other_ex = $other_ex_model->other_ex_id;
+
+            $protection_model->load(Yii::$app->request->post());
+            $protection_model->save();
+            $model->car_protection = $protection_model->protection_id;
+
+            $safety_model->load(Yii::$app->request->post());
+            $safety_model->save();
+            $model->car_safety = $safety_model->safety_id;
 
             if($model->image->saveAs($image_path)){
                 $model->car_img = $image_path;
@@ -152,6 +219,11 @@ class CarsController extends Controller
             return $this->render('update', [
                 'model' => $model,
                 'comfort_model' => $comfort_model,
+                'interior_model' => $interior_model,
+                'exterior_model' => $exterior_model,
+                'other_ex_model' => $other_ex_model,
+                'protection_model' => $protection_model,
+                'safety_model' => $safety_model,
             ]);
         }
     }
