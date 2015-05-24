@@ -26,7 +26,7 @@ class SignupForm extends Model
         return [
             ['username', 'filter', 'filter' => 'trim'],
             ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'ToвА потребителско име вече е заето.'],
+            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Toвa потребителско име вече е заето.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'filter', 'filter' => 'trim'],

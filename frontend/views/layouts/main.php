@@ -79,7 +79,7 @@ AppAsset::register($this);
             ];
             if (Yii::$app->user->identity->type == User::TYPE_OWNER){
                 $menuItems[] = [
-                    'label' => 'Добави Потребител',
+                    'label' => 'Добави Служител',
                     'url' => [
                         '/site/register'
                     ]
