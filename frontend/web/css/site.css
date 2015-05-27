@@ -91,15 +91,13 @@ a.desc:after {
 }
 
 .cars-form input[type="text"]{
-
-
     width: 300px;
- 
 }
 
-.option{
+.inline{
 
-
+    display: inline-block;
+    font-size: 12px;
     width: 300px;
- 
+    vertical-align: top;
 }
