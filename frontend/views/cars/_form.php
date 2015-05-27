@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Cars */
@@ -21,7 +22,21 @@ for ($i = date("Y"); $i >= 1970; $i--){
     <div class="inline"> 
         <?= $form->field($model, 'car_big_category')->dropDownList(
                 yii\helpers\ArrayHelper::map(common\models\Category::find()->all(),'id', 'category_name'),
-                ['prompt'=>'Избери основна категория']
+                [
+                    'prompt'=>'Избери основна категория',
+                    'onchange'=>'
+                        $.get( "'.Url::toRoute('/cars/dynamicbrands').'", { id: $(this).val() } )
+                            .done(function( data ) {
+                                $( "#'.Html::getInputId($model, 'car_brand').'" ).html( data );
+                            }
+                        );
+                        $.get( "'.Url::toRoute('/cars/dynamiccategories').'", { id: $(this).val() } )
+                            .done(function( data ) {
+                                $( "#'.Html::getInputId($model, 'car_auto_category').'" ).html( data );
+                            }
+                        );
+                    '
+                ]
         )  ?>
 
     </div>
@@ -38,13 +53,20 @@ for ($i = date("Y"); $i >= 1970; $i--){
 
     <div class="inline"> 
     <?= $form->field($model, 'car_brand')->dropDownList(
-            yii\helpers\ArrayHelper::map(common\models\Brand::find()->all(),'id', 'brand_name', 'category_id'),
-            ['prompt'=>'Избери марка']
+            yii\helpers\ArrayHelper::map(($model->car_big_category ? common\models\Brand::find()->where(['category_id' => $model->car_big_category])->all() : [] ),'id', 'brand_name', 'category_id'),
+            ['prompt'=>'Избери марка',
+            'onchange'=>'
+                        $.get( "'.Url::toRoute('/cars/dynamicmodels').'", { id: $(this).val() } )
+                            .done(function( data ) {
+                                $( "#'.Html::getInputId($model, 'car_model').'" ).html( data );
+                            }
+                        );
+                    ']
     )  ?>
     </div>
     <div class="inline"> 
     <?= $form->field($model, 'car_model')->dropDownList(
-            yii\helpers\ArrayHelper::map(common\models\Model::find()->all(),'id', 'model_name'),
+            yii\helpers\ArrayHelper::map(($model->car_brand ? common\models\Model::find()->where(['brand_id' => $model->car_brand])->all() : [] ),'id', 'model_name'),
             ['prompt'=>'Избери модел']
     )  ?>
     </div>
@@ -70,7 +92,7 @@ for ($i = date("Y"); $i >= 1970; $i--){
     </div>
     <div class="inline"> 
     <?= $form->field($model, 'car_auto_category')->dropDownList(
-            yii\helpers\ArrayHelper::map(common\models\AvtoCategory::find()->all(),'id', 'avto_category'),
+            yii\helpers\ArrayHelper::map(($model->car_big_category ? common\models\AvtoCategory::find()->where(['category_id' => $model->car_big_category])->all() : [] ),'id', 'avto_category'),
             ['prompt'=>'Избери категория']
     )  ?>
     </div>
@@ -93,7 +115,10 @@ for ($i = date("Y"); $i >= 1970; $i--){
     //)  ?>
 
     <div class="inline"> 
-    <?= $form->field($model, 'car_sh_id')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'car_sh_id')->dropDownList(
+            yii\helpers\ArrayHelper::map(common\models\Showroom::find()->joinWith(['userShowrooms'])->where(['id_user' => Yii::$app->getUser()->id])->all(),'sh_id', 'sh_name'),
+            ['prompt'=>'Избери автосалон']
+    )  ?>
     </div>
 
     <p>

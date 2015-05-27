@@ -41,7 +41,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'car_sh_id',
             'car_big_category',
             'car_year',
-            'car_img:image',
+            [
+                'attribute' => 'car_img',
+                'value' => '<a class="fancy_image" href="'.$model->car_img.'" title="Снимка">
+                                <img src="'.$model->car_img.'" width="200" alt="Снимка" />
+                            </a>',
+                'format' => 'html',
+            ],
             'exterior_repair',
             'interior_repair',
             'chassis_repair',

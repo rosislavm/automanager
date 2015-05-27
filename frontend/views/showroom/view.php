@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\grid\GridView;
 use common\models\User;
 
 /* @var $this yii\web\View */
@@ -41,5 +42,58 @@ $this->params['breadcrumbs'][] = $this->title;
             'sh_address',
         ],
     ]) ?>
+<p>
+        <?= Html::a('Въведи Автомобил', ['cars/create'], ['class' => 'btn btn-success']) ?>
+    </p>
 
+    <?= GridView::widget([
+        'dataProvider' => $carsDataProvider,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+           // 'car_id',
+            'car_brand',
+            'car_model',
+            'car_engine_type',
+            'car_power',
+            'car_year',
+          //  'car_img:ntext',
+          //  'exterior_repair',
+          //  'interior_repair',
+            // 'chassis_repair',
+            // 'engine_repair',
+            // 'other_repairs',
+            // 'total_spent',
+            // 'bought_for',
+            // 'price_for_sale',
+            // 'max_discount',
+            // 'docs_available',
+            // 'paid_duty',
+            // 'paid_ecotax',
+            // 'transit_numberplate',
+            // 'fuel_paid',
+            // 'car_wash',
+            // 'hour_book',
+            // 'disadvantages',
+            // 'import_country',
+            // 'has_crashed',
+            // 'other_info',
+            // 'car_sh_id',
+            // 'car_auto_category',
+            // 'car_big_category',
+            // 'car_colour',
+            // 'car_comfort',
+            // 'car_condition',
+            // 'car_exterior',
+            // 'car_interior',
+            // 'car_milleage',
+            // 'car_other_ex',
+            // 'car_protection',
+            // 'car_safety',
+            // 'car_town',
+            // 'car_transmission',
+
+             ['class' => 'yii\grid\ActionColumn', 'controller' => 'cars', 'template' => (Yii::$app->user->identity->type == User::TYPE_OWNER ? '{view} {update} {delete}' : '{view}')],
+        ],
+    ]); ?>
 </div>

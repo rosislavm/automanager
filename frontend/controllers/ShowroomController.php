@@ -6,6 +6,7 @@ use Yii;
 use common\models\Showroom;
 use common\models\UserShowroom;
 use common\models\User;
+use common\models\Cars;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -71,8 +72,12 @@ class ShowroomController extends Controller
     public function actionView($id)
     {
         if (UserShowroom::find()->where(['id_user' => Yii::$app->getUser()->id, 'id_showroom' => $id])->one()) {
+            $carsDataProvider = new ActiveDataProvider([
+                'query' => Cars::find()->joinWith(['userShowrooms'])->where(['id_user' => Yii::$app->getUser()->id, 'car_sh_id' => $id]),
+            ]);
             return $this->render('view', [
                 'model' => $this->findModel($id),
+                'carsDataProvider' => $carsDataProvider,
             ]);
         }else{
             return $this->redirect(['index']);

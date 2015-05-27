@@ -193,7 +193,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getShowrooms() 
     {
-        return $this->hasMany(Showroom::className(), ['sh_id' => 'id'])
+        return $this->hasMany(Showroom::className(), ['sh_id' => 'id_showroom'])
                 ->viaTable(UserShowroom::tableName(), ['id_user' => 'id']);    
     }
 }

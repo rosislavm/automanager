@@ -11,6 +11,7 @@ use common\models\Exterior;
 use common\models\OtherEx;
 use common\models\Protection;
 use common\models\Safety;
+use common\models\Brand;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -28,10 +29,10 @@ class CarsController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'view', 'create', 'update', 'delete'],
+                'only' => ['index', 'view', 'create', 'update', 'delete', 'Dynamicbrands', 'Dynamicmodels', 'Dynamiccategories'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'view'],
+                        'actions' => ['index', 'view', 'Dynamicbrands', 'Dynamicmodels', 'Dynamiccategories'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -70,6 +71,54 @@ class CarsController extends Controller
         ]);
     }
 
+    public function actionDynamicbrands($id)
+    {
+        $rows = Brand::find()->where(['category_id' => $id])->orderBy('brand_name')->all();
+ 
+        echo "<option>Избери марка</option>";
+ 
+        if(count($rows)>0){
+            foreach($rows as $row){
+                echo "<option value='$row->id'>$row->brand_name</option>";
+            }
+        }
+        else{
+            echo "<option>Няма Марки</option>";
+        }
+    }
+
+    public function actionDynamicmodels($id)
+    {
+        $rows = \common\models\Model::find()->where(['brand_id' => $id])->orderBy('model_name')->all();
+ 
+        echo "<option>Избери модел</option>";
+ 
+        if(count($rows)>0){
+            foreach($rows as $row){
+                echo "<option value='$row->id'>$row->model_name</option>";
+            }
+        }
+        else{
+            echo "<option>Няма модели</option>";
+        }
+    }
+
+    public function actionDynamiccategories($id)
+    {
+        $rows = \common\models\AvtoCategory::find()->where(['category_id' => $id])->orderBy('avto_category')->all();
+ 
+        echo "<option>Избери категория</option>";
+ 
+        if(count($rows)>0){
+            foreach($rows as $row){
+                echo "<option value='$row->id'>$row->avto_category</option>";
+            }
+        }
+        else{
+            echo "<option>Няма категории</option>";
+        }
+    }
+
     /**
      * Displays a single Cars model.
      * @param string $id
@@ -97,9 +146,50 @@ class CarsController extends Controller
         $protection_model = new Protection();
         $safety_model = new Safety();
 
+        $model->car_comfort = 1;
+        $model->car_interior = 1;
+        $model->car_exterior = 1;
+        $model->car_other_ex = 1;
+        $model->car_protection = 1;
+        $model->car_safety = 1;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if (
+            $model->load(Yii::$app->request->post()) && $model->validate() &&
+            $comfort_model->load(Yii::$app->request->post()) && $comfort_model->validate() &&
+            $interior_model->load(Yii::$app->request->post()) && $interior_model->validate() &&
+            $exterior_model->load(Yii::$app->request->post()) && $exterior_model->validate() &&
+            $other_ex_model->load(Yii::$app->request->post()) && $other_ex_model->validate() &&
+            $protection_model->load(Yii::$app->request->post()) && $protection_model->validate() &&
+            $safety_model->load(Yii::$app->request->post()) && $safety_model->validate()
+            ) {
 
+            //COMFORT MODEL
+            $comfort_model->save();
+            $model->car_comfort = $comfort_model->comfort_id;
+
+            //INTERIOR MODEL
+            $interior_model->save();
+            $model->car_interior = $interior_model->interior_id;
+
+            //EXTERIOR MODEL
+            $exterior_model->save();
+            $model->car_exterior = $exterior_model->exterior_id;
+
+            //OTHER EXTRA MODEL
+            $other_ex_model->save();
+            $model->car_other_ex = $other_ex_model->other_ex_id;
+
+            //PROTECTION MODEL
+            $protection_model->save();
+            $model->car_protection = $protection_model->protection_id;
+
+            //SAFETY MODEL            
+            $safety_model->save();
+            $model->car_safety = $safety_model->safety_id;
+
+            // TODO Add car milliage
+
+            $model->save();
         
             $model->image = UploadedFile::getInstance($model, 'car_img');
 
@@ -108,42 +198,13 @@ class CarsController extends Controller
                 $image_path = 'uploads/cars/'.$model->car_id.'/'. $model->image->baseName . '.' . $model->image->extension;
                 $model->image->saveAs($image_path);
             // }
-            //COMFORT MODEL
-            $comfort_model->load(Yii::$app->request->post());
-            $comfort_model->save();
-            $model->car_comfort = $comfort_model->comfort_id;
-
-            //INTERIOR MODEL
-            $interior_model->load(Yii::$app->request->post());
-            $interior_model->save();
-            $model->car_interior = $interior_model->interior_id;
-
-            //EXTERIOR MODEL
-            $exterior_model->load(Yii::$app->request->post());
-            $exterior_model->save();
-            $model->car_exterior = $exterior_model->exterior_id;
-
-            //OTHER EXTRA MODEL
-            $other_ex_model->load(Yii::$app->request->post());
-            $other_ex_model->save();
-            $model->car_other_ex = $other_ex_model->other_ex_id;
-
-            //PROTECTION MODEL
-            $protection_model->load(Yii::$app->request->post());
-            $protection_model->save();
-            $model->car_protection = $protection_model->protection_id;
-
-            //SAFETY MODEL
-            $safety_model->load(Yii::$app->request->post());
-            $safety_model->save();
-            $model->car_safety = $safety_model->safety_id;
-
             $model->car_img = $image_path;
             $model->save();
 
-
             return $this->redirect(['view', 'id' => $model->car_id]);
         } else {
+            // print_r($model->errors);
+            // exit;
             return $this->render('create', [
                 'model' => $model,
                 'comfort_model' => $comfort_model,
@@ -178,8 +239,16 @@ class CarsController extends Controller
 
             $model->image = UploadedFile::getInstance($model, 'car_img');
 
-            BaseFileHelper::createDirectory('uploads/cars/'.$model->car_id.'/', 777);
-            $image_path = 'uploads/cars/'.$model->car_id.'/'. $model->image->baseName . '.' . $model->image->extension;
+            if ($model->image){                
+                BaseFileHelper::createDirectory('uploads/cars/'.$model->car_id.'/', 777);
+                $image_path = 'uploads/cars/'.$model->car_id.'/'. $model->image->baseName . '.' . $model->image->extension;
+
+                if($model->image->saveAs($image_path)){
+                    $model->car_img = $image_path;
+                }
+            }else{
+                $model->car_img = $old_image;
+            }
             
             $comfort_model->load(Yii::$app->request->post());
             $comfort_model->save();
@@ -206,11 +275,7 @@ class CarsController extends Controller
             $safety_model->save();
             $model->car_safety = $safety_model->safety_id;
 
-            if($model->image->saveAs($image_path)){
-                $model->car_img = $image_path;
-            }
-
-            if ($model->save() && $old_image){
+            if ($model->save() && $old_image && $model->image){
                 @unlink($old_image);
             }
 
