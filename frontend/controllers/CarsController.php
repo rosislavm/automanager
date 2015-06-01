@@ -12,6 +12,7 @@ use common\models\OtherEx;
 use common\models\Protection;
 use common\models\Safety;
 use common\models\Brand;
+use common\models\Milleage;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -63,7 +64,7 @@ class CarsController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Cars::find()->joinWith(['userShowrooms'])->where(['id_user' => Yii::$app->getUser()->id]),
+            'query' => Cars::find()->joinWith(['userShowrooms', 'carBrand', 'carModel', 'carEngineType'])->where(['id_user' => Yii::$app->getUser()->id]),
         ]);
 
         return $this->render('index', [
@@ -145,6 +146,7 @@ class CarsController extends Controller
         $other_ex_model = new OtherEx();
         $protection_model = new Protection();
         $safety_model = new Safety();
+        $milleage_model = new Milleage();
 
         $model->car_comfort = 1;
         $model->car_interior = 1;
@@ -152,6 +154,7 @@ class CarsController extends Controller
         $model->car_other_ex = 1;
         $model->car_protection = 1;
         $model->car_safety = 1;
+        $model->car_milleage = 0;
 
         if (
             $model->load(Yii::$app->request->post()) && $model->validate() &&
@@ -160,7 +163,8 @@ class CarsController extends Controller
             $exterior_model->load(Yii::$app->request->post()) && $exterior_model->validate() &&
             $other_ex_model->load(Yii::$app->request->post()) && $other_ex_model->validate() &&
             $protection_model->load(Yii::$app->request->post()) && $protection_model->validate() &&
-            $safety_model->load(Yii::$app->request->post()) && $safety_model->validate()
+            $safety_model->load(Yii::$app->request->post()) && $safety_model->validate() &&
+            $milleage_model->load(Yii::$app->request->post()) && $milleage_model->validate()
             ) {
 
             //COMFORT MODEL
@@ -188,6 +192,8 @@ class CarsController extends Controller
             $model->car_safety = $safety_model->safety_id;
 
             // TODO Add car milliage
+            $milleage_model->save();
+            $model->car_milleage = $milleage_model->milleage_id;
 
             $model->save();
         
@@ -213,6 +219,7 @@ class CarsController extends Controller
                 'other_ex_model' => $other_ex_model,
                 'protection_model' => $protection_model,
                 'safety_model' => $safety_model,
+                'milleage_model' => $milleage_model,
             ]);
         }
     }
@@ -232,6 +239,7 @@ class CarsController extends Controller
         $other_ex_model = $model->carOtherEx;
         $protection_model = $model->carProtection;
         $safety_model = $model->carSafety;
+        $milleage_model = $model->carMilleage;
 
         $old_image = $model->car_img;
 
@@ -275,6 +283,10 @@ class CarsController extends Controller
             $safety_model->save();
             $model->car_safety = $safety_model->safety_id;
 
+            $milleage_model->load(Yii::$app->request->post());
+            $milleage_model->save();
+            $model->car_milleage = $milleage_model->milleage_id;
+
             if ($model->save() && $old_image && $model->image){
                 @unlink($old_image);
             }
@@ -289,6 +301,7 @@ class CarsController extends Controller
                 'other_ex_model' => $other_ex_model,
                 'protection_model' => $protection_model,
                 'safety_model' => $safety_model,
+                'milleage_model' => $milleage_model,
             ]);
         }
     }

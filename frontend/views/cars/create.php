@@ -22,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'other_ex_model' => $other_ex_model,
         'protection_model' => $protection_model,
         'safety_model' => $safety_model,
+        'milleage_model' => $milleage_model,
     ]) ?>
 
 </div>

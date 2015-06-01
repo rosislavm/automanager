@@ -126,7 +126,7 @@ for ($i = date("Y"); $i >= 1970; $i--){
     <?= $form->field($model, 'import_country')->textInput(['maxlength' => true]) ?>
 </div>
  <div class="inline"> 
-    <?= $form->field($model, 'car_milleage')->textInput(['maxlength' => true]) ?>
+    <?php //= $form->field($model, 'car_milleage')->textInput(['maxlength' => true]) ?>
 </div>
  <div class="inline"> 
     <?= $form->field($model, 'car_power')->textInput(['maxlength' => true]) ?>
@@ -208,7 +208,14 @@ for ($i = date("Y"); $i >= 1970; $i--){
 <div class="inline"> 
     <?= $form->field($model, 'has_crashed')->textInput(['maxlength' => true]) ?>
 </div>
+
+    <?= $this->render('_form_milleage', [
+        'model' => $milleage_model,
+        'form' => $form,
+    ]) ?>
 <p>
+
+
 <div class="inline"> 
     <h4><b>Комфорт</b></h4>
 

@@ -7,7 +7,7 @@ use common\models\User;
 /* @var $this yii\web\View */
 /* @var $model common\models\Cars */
 
-$this->title = $model->car_id;
+$this->title = $model->carBrand->brand_name;
 $this->params['breadcrumbs'][] = ['label' => 'Моите Автомобили', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -38,15 +38,71 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             //'car_id',
-            'car_sh_id',
-            'car_big_category',
-            'car_year',
+           // 'car_sh_id',
+            [
+                // 'label' => 'Марка:',
+                'attribute' => 'car_sh_id',
+                'value' => $model->carSh->sh_name,
+            ],
+            //'car_big_category',
+            [
+                // 'label' => 'Марка:',
+                'attribute' => 'car_big_category',
+                'value' => $model->carBigCategory->category_name,
+            ],
             [
                 'attribute' => 'car_img',
                 'value' => '<a class="fancy_image" href="'.$model->car_img.'" title="Снимка">
                                 <img src="'.$model->car_img.'" width="200" alt="Снимка" />
                             </a>',
                 'format' => 'html',
+            ],
+                        [
+                'attribute' => 'car_brand',
+                'value' => $model->carBrand->brand_name,
+            ],
+            [
+                'attribute' => 'car_model',
+                'value' => $model->carModel->model_name,
+            ],
+            'car_year',
+            [
+                'attribute' => 'car_engine_type',
+                'value' => $model->carEngineType->engine_type,
+            ],
+            [
+                'attribute' => 'car_auto_category',
+                'value' => $model->carAutoCategory->avto_category,
+            ],
+
+            [
+                'attribute' => 'car_colour',
+                'value' => $model->carColour->colour_name,
+            ],
+            [
+                'attribute' => 'car_condition',
+                'value' => $model->carCondition->condition_name,
+            ],
+            
+           // 'car_milleage',
+            [
+                'label' => 'Реален пробег',
+                'attribute' => 'car_milleage',
+                'value' => $model->carMilleage->milleage_real,
+            ],
+            [
+                'label' => 'Текущ пробег',
+                'attribute' => 'car_milleage',
+                'value' => $model->carMilleage->milleage_current,
+            ],
+            'car_power',
+            [
+                'attribute' => 'car_town',
+                'value' => $model->carTown->town_name,
+            ],
+            [
+                'attribute' => 'car_transmission',
+                'value' => $model->carTransmission->transmission_name,
             ],
             'exterior_repair',
             'interior_repair',
@@ -68,31 +124,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'import_country',
             'has_crashed',
             'other_info',
-           // 'car_engine_type',
-            [
-                // 'label' => 'Марка:',
-                'attribute' => 'car_engine_type',
-                'value' => $model->carEngineType->engine_type,
-            ],
-            'car_auto_category',
-            [
-                // 'label' => 'Марка:',
-                'attribute' => 'car_brand',
-                'value' => $model->carBrand->brand_name,
-            ],
-            'car_brand',
-           // 'car_model',
-            [
-                // 'label' => 'Марка:',
-                'attribute' => 'car_model',
-                'value' => $model->carModel->model_name,
-            ],
-            //'car_colour',
-            [
-                // 'label' => 'Марка:',
-                'attribute' => 'car_colour',
-                'value' => $model->carColour->colour_name,
-            ],
+            
 
 //SAFETY*****Bezopasnost*****************BEGIN******************************************************
             [
@@ -448,11 +480,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
 
 //******************************************END*********************************** 
-            'car_condition',
-            'car_milleage',
-            'car_power',
-            'car_town',
-            'car_transmission',
+
         ],
     ]) ?>
 

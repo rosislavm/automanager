@@ -125,7 +125,7 @@ class Cars extends \yii\db\ActiveRecord
             'import_country' => 'Страна на внос:',
             'has_crashed' => 'Блъскан:',
             'other_info' => 'Друга информация:',
-            'car_sh_id' => 'Car Sh ID:',
+            'car_sh_id' => 'Автосалон:',
             'car_engine_type' => 'Тип двигател:',
             'car_auto_category' => 'Категория:',
             'car_brand' => 'Марка:',

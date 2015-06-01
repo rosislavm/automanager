@@ -24,11 +24,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-           // 'car_id',
-            'car_brand',
-            'car_model',
-            'car_engine_type',
-            'car_power',
+            'carBrand.brand_name',
+            'carModel.model_name',
+            'carEngineType.engine_type',
+            [
+                'attribute'=> 'car_power',
+                'value' => function($model, $key, $index, $column){
+                    return $model->car_power.' hp';
+                },
+            ],
             'car_year',
           //  'car_img:ntext',
           //  'exterior_repair',
