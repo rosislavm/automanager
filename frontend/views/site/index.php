@@ -4,7 +4,7 @@
 use frontend\assets\IndexAsset;
 use yii\helpers\Html;
 
-$this->title = 'Yiicomm - a tutorial';
+$this->title = 'Automanager';
 
 IndexAsset::register($this);
 
