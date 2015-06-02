@@ -42,7 +42,7 @@ AppAsset::register($this);
                 ]
             ],
             [
-                'label' => 'За нас',
+                'label' => 'За Automanager',
                 'url' => [
                     '/site/about'
                 ]
